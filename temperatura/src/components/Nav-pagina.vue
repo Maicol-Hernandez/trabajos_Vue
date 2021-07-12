@@ -19,6 +19,9 @@
 </template>
 <script>
 export default {
-    name: "Nav-pagina",
-}
+  name: "Nav-pagina",
+  data() {
+    return {};
+  },
+};
 </script>

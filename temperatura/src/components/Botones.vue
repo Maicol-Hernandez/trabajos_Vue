@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout>
-      <v-flex sm12>
+      <v-flex >
         <v-btn>Texto</v-btn>
 
         <v-btn class="primary">Texto</v-btn>

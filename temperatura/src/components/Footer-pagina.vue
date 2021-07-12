@@ -36,7 +36,7 @@
 
 <script>
   export default {
-      name: "Footer-pagina",
+      name: 'Footer-pagina',
     data: () => ({
       icons: [
         'mdi-facebook',

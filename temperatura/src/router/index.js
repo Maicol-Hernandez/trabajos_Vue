@@ -12,7 +12,8 @@ import VuetifyAxios from '../components/Vuetify-axios.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', name: 'Login', component: Login },
+  { path: '/Login', name: 'Login', component: Login },
+  { path: '/', name: 'Home', component: Home },
   { path: '/Reportes', name: 'Reportes', component: Reportes },
   { path: '/api-calendario', component: VuetifyAxios },
   { path: '/tablas', component: Grid },
