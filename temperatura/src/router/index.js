@@ -5,7 +5,7 @@ import Reportes from '../components/Reportes.vue'
 import Grid from '../components/Grid.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import Home from '../views/Home.vue'
-import VuetifyAxios from '../components/Vuetify-axios.vue'
+import Calendario from '../views/Calendario.vue'
 
 
 
@@ -15,7 +15,7 @@ const routes = [
   { path: '/Login', name: 'Login', component: Login },
   { path: '/', name: 'Home', component: Home },
   { path: '/Reportes', name: 'Reportes', component: Reportes },
-  { path: '/api-calendario', component: VuetifyAxios },
+  { path: '/api-calendario', component: Calendario },
   { path: '/tablas', component: Grid },
   { path: '/helloworld', component: HelloWorld },
   { path: '/home', component: Home },

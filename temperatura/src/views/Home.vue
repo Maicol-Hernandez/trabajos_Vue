@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <nav-pagina />
-    <hello-world />
+    <!-- <hello-world /> -->
     <botones />
     <pagina-estructura />
     <footer-pagina />
