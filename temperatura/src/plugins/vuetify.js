@@ -1,7 +1,5 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
-import es from 'vuetify/lib/locale/es';
+import Vuetify from 'vuetify/lib/framework';
 
 Vue.use(Vuetify);
 
@@ -22,8 +20,4 @@ export default new Vuetify({
       },
     },
   },
-    lang: {
-      locales: { es },
-      current: 'es',
-    },
 });
