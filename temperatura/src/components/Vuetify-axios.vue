@@ -61,6 +61,7 @@
         </v-list>
       </v-card-text>
     </v-layout>
+<<<<<<< HEAD
     <template>
       <div>
         <a
@@ -101,6 +102,9 @@
         ></textarea>
       </div>
     </template>
+=======
+    <div> Hola!! {{ nombreCompleto  }}</div>
+>>>>>>> b5d0b21c02b892956889790d6448399851a3a833
   </div>
 </template>
 
@@ -117,8 +121,13 @@ export default {
       minFecha: "1984",
       valor: null,
       subtitulo: "Soy el subtitulo de Vuetify-axios",
+<<<<<<< HEAD
       message: "",
       mansajePadre: "Este es el mensaje principal",
+=======
+primerNombre: "Maicol Fernando",
+    segundoNombre: "Hernandez Peralta",
+>>>>>>> b5d0b21c02b892956889790d6448399851a3a833
       herders: [
         {
           text: "Lenguaje de programacion",
@@ -166,9 +175,30 @@ export default {
       //hazEsto: "Hola!!",
     };
   },
+<<<<<<< HEAD
 
   watch: {},
 
+=======
+  computed: {
+    // nombreCompleto: function() {
+    //   return this.primerNombre + ' ' + this.segundoNombre
+    // },
+     nombreCompleto: {
+    //   // getter
+      get: function () {
+        return this.primerNombre + " " + this.segundoNombre;
+      },
+      //setter
+      set: function (newValue) {
+        var nombres = newValue.split(" ");
+        this.primerNombre = nombres[0]
+       this.segundoNombre = nombres[nombres.length - 1]
+       console.log("this.segundoNombre", nombres)
+      },
+    },
+  },
+>>>>>>> b5d0b21c02b892956889790d6448399851a3a833
   mounted() {
     console.log("Hola estoy aca!! ");
     let timeout = (method, ms) =>
