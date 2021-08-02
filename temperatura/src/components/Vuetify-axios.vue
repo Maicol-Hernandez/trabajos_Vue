@@ -61,6 +61,7 @@
         </v-list>
       </v-card-text>
     </v-layout>
+    <div> Hola!! {{ nombreCompleto  }}</div>
   </div>
 </template>
 
@@ -77,7 +78,8 @@ export default {
       minFecha: "1984",
       valor: null,
       subtitulo: "Soy el subtitulo de Vuetify-axios",
-
+primerNombre: "Maicol Fernando",
+    segundoNombre: "Hernandez Peralta",
       herders: [
         {
           text: "Lenguaje de programacion",
@@ -113,6 +115,24 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    // nombreCompleto: function() {
+    //   return this.primerNombre + ' ' + this.segundoNombre
+    // },
+     nombreCompleto: {
+    //   // getter
+      get: function () {
+        return this.primerNombre + " " + this.segundoNombre;
+      },
+      //setter
+      set: function (newValue) {
+        var nombres = newValue.split(" ");
+        this.primerNombre = nombres[0]
+       this.segundoNombre = nombres[nombres.length - 1]
+       console.log("this.segundoNombre", nombres)
+      },
+    },
   },
   mounted() {
     console.log("Hola estoy aca!! ");
