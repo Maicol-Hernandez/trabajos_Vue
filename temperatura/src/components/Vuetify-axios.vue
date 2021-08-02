@@ -61,6 +61,46 @@
         </v-list>
       </v-card-text>
     </v-layout>
+    <template>
+      <div>
+        <a
+          color="info"
+          v-on:click.self="hazEsto('Es una ventana modal!!.', $event)"
+          >Hola!!</a
+        >
+        <label for="">Estoy aca</label>
+        <ul>
+          <li v-for="item of myArrayNombres" :key="item.name">
+            {{ item.descripcion }} || {{ item.name }} || {{ item.calificacion }}
+          </li>
+        </ul>
+        <ul>
+          <li v-for="(item, index) in myArrayNombres" :key="item.name">
+            {{ mansajePadre }} || {{ item.name }} || {{ index }}
+          </li>
+        </ul>
+        <ul>
+          <li v-for="value of perfilUser" :key="value.edad">
+            {{ value }}
+          </li>
+        </ul>
+        <v-btn color="success" @click="numeros(valores, myArrayNombres)">
+          enviar
+        </v-btn>
+        
+        <input type="text">
+        <span>Mensaje de muchas lineas: </span>
+        <p style="white-space: pre-line">{{ message }}}</p>
+        <br />
+        <textarea
+          v-model="message"
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+        ></textarea>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -77,7 +117,8 @@ export default {
       minFecha: "1984",
       valor: null,
       subtitulo: "Soy el subtitulo de Vuetify-axios",
-
+      message: "",
+      mansajePadre: "Este es el mensaje principal",
       herders: [
         {
           text: "Lenguaje de programacion",
@@ -112,8 +153,22 @@ export default {
           calificacion: 4.6,
         },
       ],
+
+      perfilUser: {
+        primerNombre: "Maicol",
+        segundoNombre: "Fernando",
+        primerApellido: "Hernandez",
+        segundoApellido: "Peralta",
+        edad: 20,
+      },
+
+      valores: [12, 22, 55, 66, 44],
+      //hazEsto: "Hola!!",
     };
   },
+
+  watch: {},
+
   mounted() {
     console.log("Hola estoy aca!! ");
     let timeout = (method, ms) =>
@@ -152,41 +207,62 @@ export default {
     //     console.log("value: -> " + value);
     //   }
     // })();
-    let valores = [12, 22, 55, 66, 44, "Error"];
-    let nombres = { name: "Maicol" };
-    nombres.name;
-    this.nuemros(valores, nombres);
 
-    console.log("this.nuemros",  this.nuemros([45, 55, 444]))
+    let perfilUser = {
+      primerNombre: "Maicol",
+      segundoNombre: "Fernando",
+      primerApellido: "Hernandez",
+      segundoApellido: "Peralta",
+      edad: 20,
+    };
+    //this.numeros(valores, perfilUser);
+    // this.nuemros([45, 55, 444], nombres);
+
+    //console.log("this.nuemros", this.nuemros(operacion, nombres));
     // console.log("this.nuemros()", this.nuemros());
     // this.nuemros().then((res) => {
     //   console.log("res", res);
     // });
   },
-
-  methods: {
-    nuemros(valores, nombres) {
+  computed: {
+    operacion: function (valores, perfilUser) {
       let total = 0;
-      console.log(valores);
-      console.log(nombres);
-      for (const item of valores) {
-        total += item;
-        console.log(total)
-        if (total == 199) {
-          console.log(`Total $${total}`);
-        } else if (total === "199Error") {
-          console.log("Entra y es Error: ");
-          console.log(total);
-        }
-       // console.log(`Item, Suma de numeros $${total}`);
-      }
+      // console.log(perfil);
 
+      console.log(valores.valores);
+
+      console.log(perfilUser);
+      // for (const item of valores) {
+      //   total += item;
+      //   console.log(total);
+      //   if (total == 199) {
+      //     console.log(`Total $${total}`);
+      //   }
+      // }
+      // var operacion = total / valores.length;
       //   await console.log("valores", valores, nombres);
       // await  console.log("Dentro de la promesa!! ", total++)
-      return total / valores.length;
+    },
+  },
+  methods: {
+    numeros: function (valores, perfilUser) {
+      console.log(valores);
+      console.log(perfilUser);
+      // const numeros = valores.assign([]);
+      // console.log("numeros", numeros);
+      // const user = perfilUser.assign({});
+      // console.log("numeros", numeros);
+     // this.operacion(valores, perfilUser);
+      // return nombres, operacion;
+    },
+    hazEsto: function (message, event) {
+      if (event) event.preventDefault();
+      alert(message);
+
+      console.log("hola");
     },
 
-    listaNombres(listaNombres) {
+    listaNombres: function (listaNombres) {
       console.log(listaNombres);
       const nombres = Object.assign([], listaNombres);
       console.log(nombres);
