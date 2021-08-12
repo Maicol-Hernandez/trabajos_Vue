@@ -61,7 +61,6 @@
         </v-list>
       </v-card-text>
     </v-layout>
-<<<<<<< HEAD
     <template>
       <div>
         <a
@@ -88,10 +87,9 @@
         <v-btn color="success" @click="numeros(valores, myArrayNombres)">
           enviar
         </v-btn>
-        
-        <input type="text">
+        <input type="text" v-model="message" placeholder="Digite cualquier cosa" />
         <span>Mensaje de muchas lineas: </span>
-        <p style="white-space: pre-line">{{ message }}}</p>
+        <p style="white-space: pre-line">{{ message }}</p>
         <br />
         <textarea
           v-model="message"
@@ -101,10 +99,8 @@
           rows="10"
         ></textarea>
       </div>
+      <div>Hola!! {{ nombreCompleto }}</div>
     </template>
-=======
-    <div> Hola!! {{ nombreCompleto  }}</div>
->>>>>>> b5d0b21c02b892956889790d6448399851a3a833
   </div>
 </template>
 
@@ -121,13 +117,11 @@ export default {
       minFecha: "1984",
       valor: null,
       subtitulo: "Soy el subtitulo de Vuetify-axios",
-<<<<<<< HEAD
       message: "",
       mansajePadre: "Este es el mensaje principal",
-=======
-primerNombre: "Maicol Fernando",
-    segundoNombre: "Hernandez Peralta",
->>>>>>> b5d0b21c02b892956889790d6448399851a3a833
+
+      primerNombre: "Maicol Fernando",
+      segundoNombre: "Hernandez Peralta",
       herders: [
         {
           text: "Lenguaje de programacion",
@@ -175,31 +169,11 @@ primerNombre: "Maicol Fernando",
       //hazEsto: "Hola!!",
     };
   },
-<<<<<<< HEAD
 
   watch: {},
 
-=======
-  computed: {
-    // nombreCompleto: function() {
-    //   return this.primerNombre + ' ' + this.segundoNombre
-    // },
-     nombreCompleto: {
-    //   // getter
-      get: function () {
-        return this.primerNombre + " " + this.segundoNombre;
-      },
-      //setter
-      set: function (newValue) {
-        var nombres = newValue.split(" ");
-        this.primerNombre = nombres[0]
-       this.segundoNombre = nombres[nombres.length - 1]
-       console.log("this.segundoNombre", nombres)
-      },
-    },
-  },
->>>>>>> b5d0b21c02b892956889790d6448399851a3a833
   mounted() {
+    console.log(this.message);
     console.log("Hola estoy aca!! ");
     let timeout = (method, ms) =>
       new Promise((resolve) => {
@@ -255,6 +229,23 @@ primerNombre: "Maicol Fernando",
     // });
   },
   computed: {
+    // nombreCompleto: function() {
+    //   return this.primerNombre + ' ' + this.segundoNombre
+    // },
+    nombreCompleto: {
+      //   // getter
+      get: function () {
+        return this.primerNombre + " " + this.segundoNombre;
+      },
+      //setter
+      set: function (newValue) {
+        var nombres = newValue.split(" ");
+        this.primerNombre = nombres[0];
+        this.segundoNombre = nombres[nombres.length - 1];
+        console.log("this.segundoNombre", nombres);
+      },
+    },
+
     operacion: function (valores, perfilUser) {
       let total = 0;
       // console.log(perfil);
@@ -282,7 +273,7 @@ primerNombre: "Maicol Fernando",
       // console.log("numeros", numeros);
       // const user = perfilUser.assign({});
       // console.log("numeros", numeros);
-     // this.operacion(valores, perfilUser);
+      // this.operacion(valores, perfilUser);
       // return nombres, operacion;
     },
     hazEsto: function (message, event) {
