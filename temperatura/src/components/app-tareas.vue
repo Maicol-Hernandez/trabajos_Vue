@@ -9,6 +9,7 @@
           v-for="(item, index) in listaTareas"
           :key="index"
         >
+        {{ index }}
           <v-card-title>
             <v-chip color="pink" label text-color="white">
               <v-icon left> mdi-label </v-icon>
@@ -16,12 +17,14 @@
             </v-chip>
           </v-card-title>
           <v-card-text>
-            <v-card-subtitle> {{ item.titulo }}#{{ item.id }} </v-card-subtitle>
+            <v-card-subtitle>
+              {{ item.titulo }} #{{ item.id }}
+            </v-card-subtitle>
             <span>{{ item.descripcion }}</span>
           </v-card-text>
           <v-card-actions>
             <v-btn color="warning" class="ml-2"> Editar </v-btn>
-            <v-btn color="error"> Eliminar </v-btn>
+            <v-btn @click="deleteNote(index)" color="error"> Eliminar </v-btn>
           </v-card-actions>
         </v-card>
         <!-- <v-card class="pa-2" outlined tile>
@@ -50,16 +53,51 @@
       </v-col>
       <v-col cols="12" sm="6" md="6">
         <v-card class="mb-3 pa-3" outlined tile>
-          <v-form @submit.prevent="submit">
-            <v-text-field label="Titulo de la tarea" v-model="titulo">
+          <v-form
+            ref="form"
+            lazy-validation
+            v-model="formValido"
+            @submit.prevent="submit"
+          >
+            <v-text-field
+              type="field"
+              label="Titulo de la tarea"
+              v-model="titulo"
+              :counter="contadorTitulo"
+              :rules="tituloRules"
+              aria-required
+            >
             </v-text-field>
-            <v-textarea label=" Descripcion de la Tarea" v-model="descripcion">
+            <v-textarea
+              type="textarea"
+              label="Descripcion de la Tarea"
+              v-model="descripcion"
+              aria-required
+              :rules="textAreaRules"
+            >
             </v-textarea>
-            <v-btn :disabled="buttonSubmit" block type="submit" color="success">Agregar Tarea</v-btn>
+            <v-btn
+              :disabled="!formValido"
+              @click="validate"
+              block
+              type="submit"
+              color="success"
+              >Agregar Tarea</v-btn
+            >
           </v-form>
         </v-card>
       </v-col>
     </v-row>
+    <div>
+      <v-snackbar v-model="snackbar">
+        {{ text }}
+        <template v-slot:action="{ attrs }">
+          <v-btn v-bind="attrs" color="pink" text @click="snackbar = false">
+            Cerrar
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
 
     <!-- <v-row dense>
       <v-col class="warning" md="6" v-for="n in 2" :key="n" cols="12">
@@ -137,14 +175,54 @@ export default {
           " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam aliquid nostrum ad dignissimos optio ducimus dolores quos nemo maiores. Fuga a distinctio harum illum voluptatem quaeratrecusandae repellendus aliquam esse. ",
       },
     ],
-    titulo: null,
-    descripcion: null,
-    buttonSubmit: true
+    titulo: "",
+    index: null,
+    descripcion: "",
+    formValido: true,
+    buttonSubmit: true,
+    snackbar: false,
+    text: "",
+    contadorTitulo: 15,
+    contadorTextArea: 10,
+    tituloRules: [
+      (v) => !!v || "El Titulo es requerido.",
+      (v) =>
+        (v && v.length <= 15) ||
+        "El Titulo debe tener como maximo 15 caracteres.",
+    ],
+    textAreaRules: [
+      (v) => !!v || "La descripcion es requerida.",
+      (v) =>
+        (v && v.length >= 10) ||
+        "La descripcion debe tener como minimo 10 caracteres.",
+    ],
   }),
 
   methods: {
+    validate: function () {
+      this.$refs.form.validate();
+    },
+
     submit: function () {
-      console.log("envia Datos", this.titulo, this.descripcion);
+      this.snackbar = true;
+      let item = {};
+      item.titulo = this.titulo;
+      item.descripcion = this.descripcion;
+      item.id = Date.now();
+      console.log(item);
+
+      this.listaTareas.push(item);
+      this.text = "Se agrego la tarea con exiso!";
+      this.reset();
+    },
+    deleteNote: function () {
+      console.log(index)
+      this.listaTareas = [];
+    },
+
+    reset: function () {
+      
+      this.$refs.form.reset();
     },
   },
 };
