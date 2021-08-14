@@ -2,19 +2,30 @@
   <v-container fluid class="text-center primary">
     <v-layout wrap>
       <v-flex class="primary" xs12>
-        <h1>12
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque saepe ducimus aliquid reprehenderit molestiae corrupti deserunt, nulla hic iure officiis facere velit quia, quis ad minus itaque explicabo vel. Sapiente.
+        <h1>
+          12 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
+          saepe ducimus aliquid reprehenderit molestiae corrupti deserunt, nulla
+          hic iure officiis facere velit quia, quis ad minus itaque explicabo
+          vel. Sapiente.
         </h1>
       </v-flex>
       <v-flex class="secondary mt-2" xs6>
-        <h1>6
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio harum officiis placeat natus voluptatum adipisci eaque. Molestias excepturi minima neque, rerum iure, quisquam incidunt eveniet sunt reprehenderit doloribus sapiente.
+        <h1>
+          6 Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          optio harum officiis placeat natus voluptatum adipisci eaque.
+          Molestias excepturi minima neque, rerum iure, quisquam incidunt
+          eveniet sunt reprehenderit doloribus sapiente.
         </h1>
       </v-flex>
       <v-flex class="error mt-2" xs6>
-        <h1>6
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis, recusandae, quidem harum quis aliquam delectus, magnam doloribus repudiandae at autem sequi odit ullam a laborum officia? Cumque, ex laborum. Impedit!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae similique sit amet, unde, eos vero odit atque enim earum accusamus minima, harum laudantium perferendis! Error porro molestias consequuntur commodi pariatur.
+        <h1>
+          6 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis,
+          recusandae, quidem harum quis aliquam delectus, magnam doloribus
+          repudiandae at autem sequi odit ullam a laborum officia? Cumque, ex
+          laborum. Impedit! Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Vitae similique sit amet, unde, eos vero odit atque enim earum
+          accusamus minima, harum laudantium perferendis! Error porro molestias
+          consequuntur commodi pariatur.
         </h1>
       </v-flex>
     </v-layout>
@@ -47,8 +58,6 @@
 <script>
 export default {
   name: "Pagina-estructura",
-  data: () => ({
-
-  }) 
+  data: () => ({}),
 };
 </script>
