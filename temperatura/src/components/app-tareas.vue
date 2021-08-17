@@ -9,7 +9,6 @@
           v-for="(item, index) in listaTareas"
           :key="index"
         >
-        {{ index }}
           <v-card-title>
             <v-chip color="pink" label text-color="white">
               <v-icon left> mdi-label </v-icon>
@@ -18,38 +17,17 @@
           </v-card-title>
           <v-card-text>
             <v-card-subtitle>
-              {{ item.titulo }} #{{ item.id }}
+              {{ item.titulo }}
             </v-card-subtitle>
             <span>{{ item.descripcion }}</span>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="warning" class="ml-2"> Editar </v-btn>
+            <v-btn color="warning" @click="updateForm(item)" class="ml-2">
+              Editar
+            </v-btn>
             <v-btn @click="deleteNote(index)" color="error"> Eliminar </v-btn>
           </v-card-actions>
         </v-card>
-        <!-- <v-card class="pa-2" outlined tile>
-          <v-card-title>
-            <v-chip color="pink" label text-color="white">
-              <v-icon left> mdi-label </v-icon>
-              Titulo de Tareas
-            </v-chip>
-          </v-card-title>
-          <v-card-text>
-            <v-card-subtitle>
-              Titulo de la tarea #2
-            </v-card-subtitle>
-            <span
-              >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam
-              aliquid nostrum ad dignissimos optio ducimus dolores quos nemo
-              maiores. Fuga a distinctio harum illum voluptatem quaerat
-              recusandae repellendus aliquam esse.</span
-            >
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="warning" class="ml-2"> Editar </v-btn>
-            <v-btn color="error"> Eliminar </v-btn>
-          </v-card-actions>
-        </v-card> -->
       </v-col>
       <v-col cols="12" sm="6" md="6">
         <v-card class="mb-3 pa-3" outlined tile>
@@ -87,6 +65,52 @@
           </v-form>
         </v-card>
       </v-col>
+
+      <v-dialog ref="modal" v-model="modal" persistent max-width="500px">
+        <v-card>
+          <v-card-title class="indigo">
+            <span class="headline" style="color: white">
+              <v-icon color="white"> mdi-pencil </v-icon>
+              {{ modalTitle }}
+            </span>
+          </v-card-title>
+          <v-card-text>
+            <v-container fluid>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Titulo de la tarea"
+                    type="field"
+                    :rules="tituloRules"
+                    v-model="tituloUpdate"
+                    :counter="contadorTitulo"
+                    aria-required=""
+                  >
+                  </v-text-field>
+                  <v-textarea
+                    v-model="descripcionUpdate"
+                    type="textarea"
+                    label="Descripcion de la tarea"
+                    aria-required
+                    :rules="textAreaRules"
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="modal = false" color="warning"> Cancelar </v-btn>
+            <v-btn
+              :disabled="!descripcionUpdate || !tituloUpdate"
+              @click="saveUpdateNote(modal)"
+              color="warning"
+            >
+              Guardar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-row>
     <div>
       <v-snackbar v-model="snackbar">
@@ -98,60 +122,6 @@
         </template>
       </v-snackbar>
     </div>
-
-    <!-- <v-row dense>
-      <v-col class="warning" md="6" v-for="n in 2" :key="n" cols="12">
-        <v-card color="primary" outlined tile class="pa-5">
-          Sistema de Columnas
-        </v-card>
-      </v-col>
-    </v-row> -->
-
-    <!-- 
-    <v-row dense class="warning">
-      <v-col cols="12" class="error">
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-card class="mb-3">
-              <v-card-title class="success">
-                <v-chip color="pink" label text-color="white">
-                  <v-icon left> mdi-label </v-icon>
-                  Titulo de Tareas
-                </v-chip>
-              </v-card-title>
-
-              <v-card-text class="info">
-                <v-card-subtitle>
-                  <v-btn color="success"> ver mas </v-btn></v-card-subtitle
-                >
-                <span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Corporis atque esse corrupti aspernatur possimus soluta,
-                  dolorum dolor id provident nostrum ea, iusto quia quasi eos
-                  impedit fuga eligendi nemo. Dolorum.
-                </span>
-              </v-card-text>
-              <v-card-actions class="red">
-                <v-btn color="warning" class="ml-2"> Editar </v-btn>
-                <v-btn color="error"> Eliminar </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-flex xs12>
-              <v-card class="mb-3">
-                <v-card-title></v-card-title>
-                <v-card-text></v-card-text>
-                <v-card-actions></v-card-actions>
-              </v-card>
-            </v-flex>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row> -->
   </v-container>
 </template>
 
@@ -177,18 +147,22 @@ export default {
     ],
     titulo: "",
     index: null,
+    tituloUpdate: "",
+    descripcionUpdate: "",
+    itemIndex: -1,
     descripcion: "",
     formValido: true,
     buttonSubmit: true,
     snackbar: false,
     text: "",
-    contadorTitulo: 15,
+    contadorTitulo: 25,
     contadorTextArea: 10,
+    modal: false,
     tituloRules: [
       (v) => !!v || "El Titulo es requerido.",
       (v) =>
-        (v && v.length <= 15) ||
-        "El Titulo debe tener como maximo 15 caracteres.",
+        (v && v.length <= 25) ||
+        "El Titulo debe tener como maximo 25 caracteres.",
     ],
     textAreaRules: [
       (v) => !!v || "La descripcion es requerida.",
@@ -197,6 +171,13 @@ export default {
         "La descripcion debe tener como minimo 10 caracteres.",
     ],
   }),
+  computed: {
+    modalTitle: function () {
+      return this.itemIndex === -1 ? "Nueva Tarea" : "Editar tarea";
+    },
+  },
+
+  watch: {},
 
   methods: {
     validate: function () {
@@ -209,19 +190,36 @@ export default {
       item.titulo = this.titulo;
       item.descripcion = this.descripcion;
       item.id = Date.now();
-      console.log(item);
-
       this.listaTareas.push(item);
       this.text = "Se agrego la tarea con exiso!";
       this.reset();
     },
-    deleteNote: function () {
-      console.log(index)
-      this.listaTareas = [];
+    updateForm: function (item) {
+      this.modal = true;
+      this.itemIndex = this.listaTareas.indexOf(item);
+
+      this.tituloUpdate = item.titulo;
+      this.descripcionUpdate = item.descripcion;
+    },
+    saveUpdateNote: function (modal) {
+      if (modal === true) {
+        this.listaTareas[this.itemIndex].titulo = this.tituloUpdate;
+        this.listaTareas[this.itemIndex].descripcion = this.descripcionUpdate;
+        this.snackbar = true;
+        this.text = "Se edito la tarea correctamente !";
+      } else {
+        this.modal = false;
+      }
+      this.modal = false;
+    },
+
+    deleteNote: function (index) {
+      this.listaTareas.splice(index, 1);
+      this.snackbar = true;
+      this.text = "Se elimino la tarea correctamente!";
     },
 
     reset: function () {
-      
       this.$refs.form.reset();
     },
   },
